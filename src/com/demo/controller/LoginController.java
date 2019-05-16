@@ -24,9 +24,9 @@ public class LoginController {
 	 */
 	@RequestMapping("doLogin")
 	@ResponseBody
-	public JsonResult doLogin(String username,String password){
+	public JsonResult doLogin(String username, String password){
 		//1.封装用户信息
-		UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		//2.获取Subject对象(通过此对象提交令牌)
 		Subject subject = SecurityUtils.getSubject();
 		//2.执行用户身份认证(将令牌提交给Shiro中的SecurityManager)

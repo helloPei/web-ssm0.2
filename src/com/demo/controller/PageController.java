@@ -2,6 +2,11 @@ package com.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+/**
+ * 控制层
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping("/")
 public class PageController {
@@ -31,6 +36,7 @@ public class PageController {
 //	}
 	/**
 	 * 问卷页面
+	 * @return
 	 */
 	@RequestMapping("doPaperUI")
 	public String doPagerUI(){

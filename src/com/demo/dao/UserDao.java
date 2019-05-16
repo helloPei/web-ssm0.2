@@ -8,5 +8,5 @@ public interface UserDao {
 	  * @param username
 	  * @return
 	  */
-	 User findUserByUserName(String username);
+	 public User findUserByUserName(String username);
 }

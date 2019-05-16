@@ -1,7 +1,7 @@
 package com.demo.dao;
 
-import com.demo.entity.User;
+import com.demo.entity.Paper;
 
 public interface PaperDao {
-	public User findAllById(int id);
+	public Paper findAllById(int id);
 }

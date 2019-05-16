@@ -1,7 +1,7 @@
 package com.demo.service;
 
-import com.demo.entity.User;
+import com.demo.entity.Paper;
 
 public interface PaperService {
-	public User findAllById(int id);//根据学号查学生
+	public Paper findAllById(int id);//根据ID查询
 }

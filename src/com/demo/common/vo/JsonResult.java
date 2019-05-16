@@ -8,12 +8,13 @@ import java.io.Serializable;
  */
 public class JsonResult implements Serializable{
 	private static final long serialVersionUID = -2040132524942880840L;
-	/**状态码:1表示正确,0表示错误*/
-	private int state=1;
-	/**状态码对应的消息*/
-	private String message="ok";
-	/**要呈现的正确数据*/
+	/** 状态码:1表示正确,0表示错误 */
+	private int state = 1;
+	/** 状态码对应的消息 */
+	private String message = "ok";
+	/** 要呈现的正确数据 */
 	private Object data;//必须为data
+	
 	public JsonResult() {}
 	public JsonResult(String message) {
 		this.message=message;
