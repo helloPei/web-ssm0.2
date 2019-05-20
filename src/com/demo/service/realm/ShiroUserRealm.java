@@ -16,6 +16,7 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.demo.common.vo.JsonResult;
 import com.demo.dao.UserDao;
 import com.demo.entity.User;
 /**
@@ -44,12 +45,10 @@ public class ShiroUserRealm extends AuthorizingRealm {//AuthenticationRealm(提�
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
 			throws AuthenticationException {
-		logger.info("==doGetAuthenticationInfo===");//获取用户认证信息
+		logger.info("执行用户认证信息");//获取用户认证信息
 		//1.获取用户名
-		//UsernamePasswordToken upToken = (UsernamePasswordToken)token;
-		//String username = upToken.getPrincipal();
 		String username = (String)token.getPrincipal();
-		logger.info("username = " + username);//用户名
+		logger.info("用户名：" + username);//用户名
 		//2.基于用户名执行查询操作获取用户对象
 		User user = userDao.findUserByUserName(username);
 		//3.对用名对象进行判定
@@ -59,8 +58,8 @@ public class ShiroUserRealm extends AuthorizingRealm {//AuthenticationRealm(提�
 		//3.2判定用户是否被禁用
 		if(user.getValid() == 0)
 			throw new LockedAccountException();//用户已被禁用
-		//4.对用户相关信息进行(密码，盐值等)
-		//封装了一个字节数组以及一些编码操作
+		//4.对用户相关信息进行认证(用户已有身份，密码，盐值等)
+		//4.1封装了一个字节数组以及一些编码操作
 		ByteSource credentialsSalt = ByteSource.Util.bytes(user.getSalt());
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(
 				user, //principal(用户新身份)
@@ -71,8 +70,8 @@ public class ShiroUserRealm extends AuthorizingRealm {//AuthenticationRealm(提�
 		return info;//交给认证管理器
 	}
     /**
-     * 此方法提供授权数据的获取操作,当我们访问系统中的一个需要
-     * 授权访问的方法时,shiro框架底层会通过如下方法获取用户权限信息
+     *	 此方法提供授权数据的获取操作,当我们访问系统中的一个需要
+     * 	授权访问的方法时,shiro框架底层会通过如下方法获取用户权限信息
      */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {

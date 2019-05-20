@@ -25,42 +25,61 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.3.xsd" >
        
-       <!--	配置SecurityManager对象(Shiro框架核心，负责调用相关组件实现) -->
-       <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-       		<property name="Realm" ref="shiroUserRealm"/>
-       </bean>
-       <!--	配置ShiroFilterFactoryBean对象() -->
-       <bean id="shiroFilterFactory" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-       		<property name="SecurityManager" ref="securityManager"/>
-       		<!--	配置登录页面	 -->
-       		<property name="LoginUrl" value="/doLoginUI.do"/>
-       		<!--	定义过滤规则(哪些资源允许匿名访问，哪些资源必须授权访问)	  -->
-       		<property name="FilterChainDefinitionMap">
-       			<map>
-       				<!--	说明：anon表示允许匿名访问
-       						  authc表示必须认证访问 -->
-       				<!--	允许 bower_components 匿名访问 -->
-       				<entry key="/bower_components/**" value="anon"></entry>
-       				<entry key="/build/**" value="anon"/>
-               		<entry key="/dist/**" value="anon"/>
-               		<entry key="/plugins/**" value="anon"/>
-               		<entry key="/doLogin.do" value="anon"/>
-               		<entry key="/doLogout.do" value="logout"/>
-              		<entry key="/**" value="authc"/><!-- 必须认证 -->
-              		<entry key="/doPaperUI.do" value="anon"/>
-       			</map>
-       		</property>
-       </bean>     
-       <!-- 配置授权操作需要的Bean对象 -->
-       <!-- 配置bean对象的生命周期管理 -->
-       <bean id="lifecycleBeanPostProcessor" 
-				class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-       <!-- 配置Bean对象的代理 -->
-       <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-       			depends-on="lifecycleBeanPostProcessor">
-       </bean>
-       <!-- 配置授权属性 -->
-       <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-       		<property name="SecurityManager" ref="securityManager"/>
-       </bean>
+	<!-- 安全管理器 -->
+	<!-- 配置SecurityManager对象(Shiro框架核心，负责调用相关组件实现) -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 配置Realm -->
+		<property name="Realm" ref="shiroUserRealm"/>
+		<!-- 配置记住我 -->
+		<property name="rememberMeManager" ref="rememberMeManager"/>
+	</bean>
+       
+	<!-- 认证配置 -->
+	<!-- 配置ShiroFilterFactoryBean对象 -->
+	<bean id="shiroFilterFactory" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    	<property name="SecurityManager" ref="securityManager"/>
+    	<!-- 配置登录页面 -->
+    	<property name="LoginUrl" value="/doLoginUI.do"/>
+    	<!-- 定义过滤规则(哪些资源允许匿名访问，哪些资源必须授权访问) -->
+    	<property name="FilterChainDefinitionMap">
+       		<map>
+	       		<!-- 配置说明：anon表示允许匿名访问，authc表示必须认证访问 -->
+	       		<entry key="/bower_components/**" value="anon"/>
+	       		<entry key="/build/**" value="anon"/>
+	            <entry key="/dist/**" value="anon"/>
+	            <entry key="/plugins/**" value="anon"/>
+	            <entry key="/doPaperUI.do" value="anon"/>
+	            <entry key="/paper/findAllById.do" value="anon"/>
+	            <entry key="/doLogin.do" value="anon"/>
+	            <entry key="/doLogout.do" value="logout"/>
+	            <entry key="/**" value="authc"/><!-- 最后配置/**必须认证 -->
+       		</map>
+		</property>
+	</bean>
+       
+	<!-- 授权配置 -->
+	<!-- 配置bean对象的生命周期管理 -->
+	<bean id="lifecycleBeanPostProcessor" 
+		  class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	<!-- 配置bean对象的代理 -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+       	  depends-on="lifecycleBeanPostProcessor">
+	</bean>
+	<!-- 配置授权属性 -->
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="SecurityManager" ref="securityManager"/>
+	</bean>
+	
+	<!-- 记住我配置 -->
+	<!-- 记住我密码Cookie -->
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="rememberMe"/>
+		<!-- 7天，采用spring el表达式来计算，方便修改 -->
+		<property name="maxAge" value="#{7*24*60*60}"/>
+		<property name="domain" value=""/>
+	</bean>
+	<!-- rememberMe管理器，cipherKey生成见{@code Base64Test.java} -->
+	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<property name="cookie" ref="rememberMeCookie"/>
+	</bean>
 </beans>

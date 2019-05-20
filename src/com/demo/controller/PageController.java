@@ -11,20 +11,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class PageController {
 	/**
-	 * 主页
+	 * 	问卷页面
 	 * @return
 	 */
-	@RequestMapping("doIndexUI")
-	public String doIndexUI(){
-		return "index";
+	@RequestMapping("doPaperUI")
+	public String doPagerUI(){
+		return "paper";
 	}
 	/**
-	 * 登录页面
+	 * 	登录页面
 	 * @return
 	 */
 	@RequestMapping("doLoginUI")
 	public String doLoginUI(){
 		return "login";
+	}
+	/**
+	 * 	主页
+	 * @return
+	 */
+	@RequestMapping("doIndexUI")
+	public String doIndexUI(){
+		return "index";
 	}
 	/**
 	 * 页面分页
@@ -34,12 +42,4 @@ public class PageController {
 //	public String doPageUI(){
 //		return "common/page";
 //	}
-	/**
-	 * 问卷页面
-	 * @return
-	 */
-	@RequestMapping("doPaperUI")
-	public String doPagerUI(){
-		return "paper";
-	}
 }

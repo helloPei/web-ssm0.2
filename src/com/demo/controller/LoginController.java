@@ -1,12 +1,17 @@
 package com.demo.controller;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.druid.util.StringUtils;
 import com.demo.common.vo.JsonResult;
 /**
  * 负责执行登录操作的控制层方法
@@ -16,25 +21,63 @@ import com.demo.common.vo.JsonResult;
 @Controller
 @RequestMapping("/")
 public class LoginController {
-	/***
-	 * 负责执行登录操作的控制层方法
+	/**
+	 * 登录
 	 * @param username
 	 * @param password
+	 * @param isRememberMe
 	 * @return
 	 */
+	@SuppressWarnings("finally")
 	@RequestMapping("doLogin")
 	@ResponseBody
-	public JsonResult doLogin(String username, String password){
-		//1.封装用户信息
+	public JsonResult doLogin(String username, String password, Integer isRememberMe){
+		JsonResult jsonResult = new JsonResult();
+		//用户名密码非空判断
+		if(StringUtils.isEmpty(username)||StringUtils.isEmpty(password)) {
+			if(StringUtils.isEmpty(username)) {
+				jsonResult.setMessage("用户名不能为空");
+			}
+			if(StringUtils.isEmpty(password)) {
+				jsonResult.setMessage("密码不能为空");
+			}
+			return jsonResult;
+		}
+		
+		//1.根据用户名和密码获取一个令牌（token）
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-		//2.获取Subject对象(通过此对象提交令牌)
-		Subject subject = SecurityUtils.getSubject();
-		//2.执行用户身份认证(将令牌提交给Shiro中的SecurityManager)
-		subject.login(token);//此方法运行时可能会出现异常
-		//分析:
-		//1)token会传给shiro的SecurityManager
-		//2)SecurityManager将token传递给认证管理器
-		//3)认证管理器会将token传递给realm
-		return new JsonResult("login ok");
+		//1.1记住我
+		if(isRememberMe == 1)token.setRememberMe(true);//可选用
+		
+		//2.通过SecurityUtils工具类，获取当前执行的用户用户
+		Subject currentUser = SecurityUtils.getSubject();
+		try {
+			//3.进行认证
+			currentUser.login(token);//此方法运行时可能会出现异常
+			jsonResult.setMessage("successfully");
+		} catch (UnknownAccountException e) {
+			jsonResult.setMessage("此用户不存在");
+		} catch (LockedAccountException e) {
+			jsonResult.setMessage("此用户已被禁用");
+		} catch (IncorrectCredentialsException e) {
+			jsonResult.setMessage("密码错误");
+		} catch (AuthenticationException e) {
+			jsonResult.setMessage("用户名密码错误");
+		} catch (RuntimeException e) {
+			jsonResult.setMessage("未知错误，请联系管理员");
+		} finally {
+			return jsonResult;
+		}
+	}
+	/**
+	 * 登出
+	 * @return
+	 */
+	@RequestMapping("doLogout")
+	@ResponseBody
+	public String doLogout() {
+		Subject currentUser = SecurityUtils.getSubject();
+		currentUser.logout();
+		return "login";
 	}
 }

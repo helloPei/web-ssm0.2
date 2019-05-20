@@ -24,31 +24,34 @@
        http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.3.xsd" >
-       <!-- 读取配置文件jdbc.properties -->
-       <util:properties id="cfg" location="classpath:jdbc.properties"/>
-       <!-- 整合DruidDataSource对象 -->
-       <bean id="druidDataSource" 
-             class="com.alibaba.druid.pool.DruidDataSource"
-             init-method="init"
-             destroy-method="close"
-             lazy-init="false"
-             scope="singleton">
-             <!-- 属性值的注入 -->
-             <property name="DriverClassName" value="#{cfg.jdbcDriverClassName}"/>
-             <property name="Url" value="#{cfg.jdbcUrl}"/>
-             <property name="Username" value="#{cfg.jdbcUsername}"/>
-             <property name="Password" value="#{cfg.jdbcPassword}"/>
-       </bean>
-		
-       <!-- 整合mybatis框架 -->
-       <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-           <property name="dataSource" ref="druidDataSource"/>
-           <property name="MapperLocations"
-                     value="classpath*:mapper/*Mapper.xml"/>
-       </bean>
-       <!-- 配置MapperScanner对象(负责扫描对应的dao接口,基于接口创建代理对象)-->
-       <bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-             <property name="BasePackage" value="com.**.dao"></property>
-             <property name="SqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-       </bean>
+       
+	<!-- 读取配置文件jdbc.properties -->
+    <util:properties id="cfg" location="classpath:jdbc.properties"/>
+       
+    <!-- 整合DruidDataSource对象 -->
+    <bean id="druidDataSource" 
+    	  class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init"
+          destroy-method="close"
+          lazy-init="false"
+          scope="singleton">
+        
+        <!-- 属性值的注入 -->
+        <property name="DriverClassName" value="#{cfg.jdbcDriverClassName}"/>
+        <property name="Url" value="#{cfg.jdbcUrl}"/>
+        <property name="Username" value="#{cfg.jdbcUsername}"/>
+        <property name="Password" value="#{cfg.jdbcPassword}"/>
+    </bean>
+    
+    <!-- 整合mybatis框架 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<property name="dataSource" ref="druidDataSource"/>
+    	<property name="MapperLocations" value="classpath*:mapper/*Mapper.xml"/>
+	</bean>
+       
+	<!-- 配置MapperScanner对象(负责扫描对应的dao接口,基于接口创建代理对象)-->
+	<bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	<property name="BasePackage" value="com.**.dao"></property>
+    	<property name="SqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
 </beans>

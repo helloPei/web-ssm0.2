@@ -5,4 +5,8 @@
 	<select id="findUserByUserName" resultType="com.demo.entity.User">
 		select * from sys_users where username = #{username}
 	</select>
+	
+	<select id="findAllUser" resultType="com.demo.entity.User">
+		select * from sys_users
+	</select>
 </mapper>

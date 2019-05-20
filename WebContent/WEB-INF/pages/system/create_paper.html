@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台上移下移，编辑，删除效果</title>
+<link rel="stylesheet" type="text/css" href="css/wenjuan_ht.css">
+</head>
+<body>
+<div style="padding:5px 0;">
+  <input type="button" value="添加单选题" onclick="addSingle()"/>
+  &nbsp;&nbsp;
+  <input type="button" value="添加多选题" onclick="addMulti()"/>
+  &nbsp;&nbsp;
+  <input type="button" value="添加填空题" onclick="addBlank()"/>
+</div>
+<div class=" all_660">
+  <div class="yd_box"></div>
+  <!--选项卡区域  模板区域---------------------------------------------------------------------------------------------------------------------------------------->
+  <div class="xxk_box hide">
+    <ul class="xxk_title">
+      <li class="on">单选</li>
+      <li>多选</li>
+      <li>填空</li>
+    </ul>
+    <div class="xxk_conn">
+    <!-- xxk_conn -->
+      <!--单选----------------------------------------------------------------------------------------------------------------------------------------->
+      <div class="xxk_xzqh_box dxuan ">
+      <!-- xxk_xzqh_box dxuan -->
+        <textarea name="" cols="" rows="" class="input_wenbk btwen_text btwen_text_dx" onblur="if(!this.value)this.value='单选题目'" onclick="if(this.value&&this.value=='单选题目' )  this.value=''">
+        </textarea>
+        <div class="title_itram">
+          <div class="kzjxx_iteam">
+            <input name="" type="radio" value="" class="dxk">
+            <input name="" type="text" class="input_wenbk" value="选项" onblur="if(!this.value)this.value='选项'" onclick="if(this.value&&this.value=='选项' )  this.value=''">
+            <label>
+              <input name="" type="checkbox" value="" class="fxk">
+              <span>可填空</span></label>
+            <a href="javascript:void(0);" class="del_xm">删除</a> </div>
+          <div class="kzjxx_iteam">
+            <input name="" type="radio" value="" class="dxk">
+            <input name="" type="text" class="input_wenbk" value="选项" onblur="if(!this.value)this.value='选项'" onclick="if(this.value&&this.value=='选项' )  this.value=''">
+            <label>
+              <input name="" type="checkbox" value="" class="fxk">
+              <span>可填空</span></label>
+            <a href="javascript:void(0);" class="del_xm">删除</a> </div>
+        </div>
+        <a href="javascript:void(0)" class="zjxx">增加选项</a> 
+        <!--完成编辑-->
+        <div class="bjqxwc_box"><a href="javascript:void(0);" class="qxbj_but">取消编辑</a><a href="javascript:void(0);" class="swcbj_but" >完成编辑</a>
+        </div>
+      </div>
+      <!-- /xxk_xzqh_box dxuan -->
+      
+      <!--多选----------------------------------------------------------------------------------------------------------------------------------------->
+      <div class="xxk_xzqh_box duoxuan hide">
+      <!-- xxk_xzqh_box duoxuan hide -->
+        <textarea name="" cols="" rows="" class="input_wenbk btwen_text btwen_text_duox" onblur="if(!this.value)this.value='多选题目'" onclick="if(this.value&&this.value=='多选题目' )  this.value=''">
+        </textarea>
+        <div class="title_itram">
+          <div class="kzjxx_iteam">
+            <input name="" type="radio" value="" class="dxk">
+            <input name="" type="text" class="input_wenbk" value="选项" onblur="if(!this.value)this.value='选项'" onclick="if(this.value&&this.value=='选项' )  this.value=''">
+            <label>
+              <input name="" type="checkbox" value="" class="fxk">
+              <span>可填空</span></label>
+            <a href="javascript:void(0);" class="del_xm">删除</a> </div>
+          <div class="kzjxx_iteam">
+            <input name="" type="radio" value="" class="dxk">
+            <input name="" type="text" class="input_wenbk" value="选项" onblur="if(!this.value)this.value='选项'" onclick="if(this.value&&this.value=='选项' )  this.value=''">
+            <label>
+              <input name="" type="checkbox" value="" class="fxk">
+              <span>可填空</span></label>
+            <a href="javascript:void(0);" class="del_xm">删除</a> </div>
+        </div>
+        <a href="javascript:void(0)" class="zjxx">增加选项</a> 
+        <!--完成编辑-->
+        <div class="bjqxwc_box"><a href="javascript:void(0);" class="qxbj_but">取消编辑</a><a href="javascript:void(0);" class="swcbj_but" >完成编辑</a>
+        </div>
+      </div>
+      <!-- /xxk_xzqh_box duoxuan hide -->
+      
+      <!-- 填空----------------------------------------------------------------------------------------------------------------------------------------->
+      <div class="xxk_xzqh_box tktm hide">
+      <!-- xxk_xzqh_box tktm hide -->
+        <textarea name=""  cols="" rows="" class="input_wenbk btwen_text btwen_text_tk" onblur="if(!this.value)this.value='填空题目'" onclick="if(this.value&&this.value=='填空题目' )  this.value=''">
+        </textarea>
+        <!--完成编辑-->
+        <div class="bjqxwc_box"> <a href="javascript:void(0);" class="qxbj_but">取消编辑</a> <a href="javascript:void(0);" class="swcbj_but" > 完成编辑</a>
+        </div>
+      </div>
+      <!-- /xxk_xzqh_box tktm hide -->
+    </div>
+    <!-- /xxk_conn -->
+  </div>
+</div>
+<div>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td align="center">
+				<input type="submit" value="提交" onclick="submit()"/>
+				&nbsp;&nbsp;
+				<input type="button" value="返回" onClick="history.back()"/>
+			</td>
+		</tr>
+	</table>
+  <!-- <a href="javascript:void(0)" onclick="submit()">提交</a>
+  &nbsp;&nbsp;
+  <a href="javascript:void(0)" onclick="return()">返回</a> -->
+</div>
+</body>
+<script src="js/jquery-1.8.0.min.js"></script>
+<script src="js/survey_edit.js"></script>
+<script>
+//添加单选题
+function addSingle(){
+	var leng = $(".yd_box").children(".movie_box").length;
+	$(".yd_box").append("<div class='movie_box single"+leng+"'></div>");
+	$(".single"+leng+"").append(
+			"<ul class='wjdc_list'>"
+			+"<li><div class='tm_btitlt'><i class='nmb'>"+(1+leng)+"</i>. <i class='btwenzi'>单选题题目编辑？</i><span class='tip_wz'>【单选】</span></div></li>"
+			+"<li><label><input name='a' type='radio' value=''><span>选项编辑</span></label></li>"
+			+"<li><label><input name='a' type='radio' value=''><span>其他</span><input name='' type='text' class='wenb_input'></label></li>"
+			+"</ul><div class='dx_box' data-t='0'></div>"
+		);
+	edit();
+}
+//添加多选题
+function addMulti(){
+	var leng = $(".yd_box").children(".movie_box").length;
+	$(".yd_box").append("<div class='movie_box multi"+leng+"'></div>");
+	$(".multi"+leng+"").append(
+			"<ul class='wjdc_list'>"
+			+"<li><div class='tm_btitlt'><i class='nmb'>"+(1+leng)+"</i>. <i class='btwenzi'>多选题题目编辑？</i><span class='tip_wz'>【多选】</span></div></li>"
+			+"<li><label><input name='' type='checkbox' value=''><span>选项编辑</span></label></li>"
+			+"<li><label><input name='' type='checkbox' value=''><span>其他</span><input name='' type='text' class='wenb_input'></label></li>"
+			+"</ul><div class='dx_box' data-t='1'></div></div>"
+		);
+	edit();
+}
+//填空题
+function addBlank(){
+	var leng = $(".yd_box").children(".movie_box").length;
+	$(".yd_box").append("<div class='movie_box blank"+leng+"'></div>");
+	$(".blank"+leng+"").append(
+			"<ul class='wjdc_list'>"
+			+"<li><div class='tm_btitlt'><i class='nmb'>"+(1+leng)+"</i>.  <i class='btwenzi'>填空题题目编辑？</i><span class='tip_wz'>【填空】</span></div></li>"
+			+"<li><label><textarea name='' cols='' rows='' class='input_wenbk btwen_text btwen_text_dx' onblur='if(!this.value)this.value='单选题目'' onclick='if(this.value&&this.value=='单选题目') this.value='''></textarea></label></li>"
+			+"</ul><div class='dx_box' data-t='2'></div>"
+		);
+	edit();
+}
+//编辑
+function edit(){
+	$(".movie_box").hover(function(){
+		var	html_cz = "<div class='kzqy_czbut'><a href='javascript:void(0)' class='sy'>上移</a><a href='javascript:void(0)'  class='xy'>下移</a><a href='javascript:void(0)'  class='bianji'>编辑</a><a href='javascript:void(0)' class='del' >删除</a></div>"
+ 		$(this).css({"border":"1px solid #0099ff"});
+		$(this).children(".wjdc_list").after(html_cz);
+	},function(){
+		$(this).css({"border":"1px solid #fff"});
+		$(this).children(".kzqy_czbut").remove();
+	});
+}
+</script>
+</html>

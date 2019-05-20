@@ -25,7 +25,7 @@ public class UserController {
 	 */
     @RequestMapping("doUserListUI")
 	public String doUserListUI(){
-		return "sys/user_list";
+		return "system/user_list";
 	}
     /**
      * 添加用户页面
@@ -84,9 +84,9 @@ public class UserController {
      */
     @RequestMapping("doFindAllUser")
 	@ResponseBody
-	public JsonResult doFindAllUser(Integer pageNum, Integer pageSize) {
+	public JsonResult doFindAllUser() {
     	//PageHelper页面框架，pageNum页面数、pageSize页面大小
-    	PageHelper.startPage(pageNum, pageSize);
+    	PageHelper.startPage(50, 10);
 		List<User> userList = userService.findAllUser();
 		PageInfo<User> pageInfo = new PageInfo<User>(userList);
     	//数据返回视图层
