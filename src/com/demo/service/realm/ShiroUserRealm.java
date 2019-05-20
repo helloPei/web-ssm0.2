@@ -16,7 +16,6 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.demo.common.vo.JsonResult;
 import com.demo.dao.UserDao;
 import com.demo.entity.User;
 /**
@@ -70,8 +69,8 @@ public class ShiroUserRealm extends AuthorizingRealm {//AuthenticationRealm(提�
 		return info;//交给认证管理器
 	}
     /**
-     *	 此方法提供授权数据的获取操作,当我们访问系统中的一个需要
-     * 	授权访问的方法时,shiro框架底层会通过如下方法获取用户权限信息
+     *	此方法提供授权数据的获取操作,当我们访问系统中的一个需要
+     *	（授权访问的方法时，shiro框架底层会通过如下方法获取用户权限信息）
      */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
