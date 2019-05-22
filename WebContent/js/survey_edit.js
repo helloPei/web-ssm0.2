@@ -62,8 +62,16 @@ $(document).ready(function(e){
 	});
 	
 	//删除
-	$(".del").live("click", function() {  
-		var czxx = $(this).parent(".kzqy_czbut").parent(".movie_box"); 
+	$(".del").live("click", function() {
+		$(this).parent(".kzqy_czbut").parent(".movie_box").remove(); 
+		var xh_num = 0;
+		//重新编号
+		$(".yd_box").find(".movie_box").each(function(){
+			xh_num++;
+			$(".yd_box").children(".movie_box").eq(xh_num-1).find(".nmb").text(xh_num);
+			//alert(xh_num);
+       		});
+		/*var czxx = $(this).parent(".kzqy_czbut").parent(".movie_box"); 
 		var zgtitle_gs = czxx.parent(".yd_box").find(".movie_box").length;
 		var xh_num = 0; 
 		//重新编号
@@ -71,8 +79,8 @@ $(document).ready(function(e){
 			$(".yd_box").children(".movie_box").eq(xh_num).find(".nmb").text(xh_num);
 			xh_num++;
 			//alert(xh_num);
-        });
-		czxx.remove(); 	  		 
+        	});
+		czxx.remove();*/ 
 	});
 	
 	//编辑
